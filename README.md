@@ -1,6 +1,8 @@
-# 電影紀錄與分析（movie-log）
+# 電影紀錄與分析（Movie-log）
 
-這是小華的個人電影評價查詢、觀後心得與片單資料庫。
+這是小華的個人電影評價查詢、觀後心得與片單資料庫，並透過 GitHub Pages 提供個人網頁版瀏覽介面：
+- **GitHub 倉庫**：https://github.com/ckw10326/Movie-log （Public，以免費啟用 GitHub Pages）
+- **個人電影牆網頁**：https://ckw10326.github.io/Movie-log/
 
 ---
 
@@ -11,11 +13,44 @@
 2. **查重與瀏覽片單**：
    - 有終端機工具的 AI：使用 `rg` / `grep` 或 Python 腳本只搜尋並回傳「目標電影那 1 行」。
    - 無終端機工具的 AI：請先只讀取輕量索引 [`titles.txt`](./titles.txt)。
-3. **新增與更新**：
+3. **新增、校對與暫存機制**：
+   - **先收資料、確認再寫入**：若小華先分批提供劇情整理或資料，並指示「先不要寫入」，AI 應先暫存於對話中，待心得補充完整並確認後再一次寫入並推送。
    - **檢查重複**：新增前先檢查是否已存在相同電影，避免重複建檔。
-   - **新增電影**：用腳本直接附加（append）到 [`movies.jsonl`](./movies.jsonl) 最後一行，並同步更新 `titles.txt`。
+   - **新增電影**：用腳本直接附加（append）到 [`movies.jsonl`](./movies.jsonl) 最後一行，並同步更新 [`titles.txt`](./titles.txt)。
+   - **順手抓取海報（`poster`）**：新增電影時，應根據片名／年份／導演抓取可用的公開海報圖片網址（優先選用支援跨站顯示、無防盜鏈阻擋的來源，如 NeoDB、Wikimedia 等，並驗證 HTTP 200），寫入 `poster` 欄位。
    - **更新心得／資料**：用腳本只修改對應 `id` 的那一行，並更新 `updated_at`。
    - **保留原話與校對**：若片名來自語音輸入（可能有錯字）或劇情描述模糊，先查證核對後再標記 `status: "已確認"`（未確定前標為 `"待確認"`），並保留使用者的原始心得。
+4. **網頁（`index.html`）省 Token 與更新規則**：
+   - **純前端即時讀取（無需 `build.py`）**：[`index.html`](./index.html) 會直接在瀏覽器透過 `fetch('./movies.jsonl')` 渲染最新資料。**日常新增或修改電影時，AI 嚴禁重寫或修改 `index.html`**（不需執行任何生成 HTML 的腳本，網頁更新的額外 Token 消耗為 0）。
+   - **主動詢問與確認**：當小華提供完整資料並寫入 `movies.jsonl` 之後，AI 應**主動詢問小華是否需要調整或更新 `index.html` 呈現方式**（若無新欄位或版面調整需求，則直接提醒 GitHub Pages 已隨 `movies.jsonl` 推送自動更新即可）。
+   - **網頁版面設計共識**：
+     - 主畫面維持**緊湊小字表格式**，**不顯示海報縮圖與長篇內容**。
+     - **海報與詳細內容（含個人推薦度、主演、平台評價、心得、討論重點、跨片連結）僅在點擊該列彈出詳細視窗（Modal）時才載入顯示**。
+     - 結構化故事整理（`plot_outline`）預設摺疊收合，點擊後才展開。
+
+---
+
+## 🗂️ `movies.jsonl` 資料欄位規格（Schema）
+
+每行 1 個 JSON 物件，支援以下欄位（選填欄位若無資料可省略或設為 `null`）：
+
+- `id`（number）：流水編號
+- `title`（string）：中文片名
+- `original_title`（string | null）：原文片名
+- `year`（number | null）：年份
+- `director`（string | null）：導演
+- `cast`（string | null，選填）：主演陣容
+- `status`（string）：`"已確認"` 或 `"待確認"`
+- `watched`（boolean）：是否已看過
+- `rating`（string | null，選填）：個人評分／推薦度（例如 `"超級喜歡（極力推薦）"`）
+- `douban`（object | null）：`{"score": 8.0, "votes": 140000, "dist": "..."}`
+- `other_scores`（string | null）：其他平台分數對照
+- `user_notes`（string | null）：小華的個人觀後感／原始筆記
+- `summary`（string | null）：討論重點與評價總結
+- `related_movies`（array | null，選填）：跨片連結／延伸片單
+- `plot_outline`（string | null，選填）：結構化故事整理（於網頁彈窗預設摺疊）
+- `poster`（string | null，選填）：電影海報圖片網址（僅於彈窗開啟時載入）
+- `updated_at`（string）：最後更新日期（`YYYY-MM-DD`）
 
 ---
 
@@ -37,7 +72,8 @@
 
 ## 📁 檔案說明
 
-- `README.md`：本說明書（AI 交接規則與運作標準）。
+- `README.md`：本說明書（AI 交接規則、網頁省 Token 規範與資料欄位規格）。
 - `docs/discussion-agent.md`：深度討論視窗的 AI 工作定位與結尾可複製輸出範本。
 - `titles.txt`：極簡片單索引（格式：`id | 片名 | 年份 | 是否看過 | 豆瓣分數`）。
 - `movies.jsonl`：完整電影資料庫（每行 1 部電影的 JSON 物件）。
+- `index.html`：GitHub Pages 個人電影牆前端頁面（自動讀取 `movies.jsonl`，緊湊表格＋彈窗詳情）。
