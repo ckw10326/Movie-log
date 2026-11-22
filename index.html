@@ -7,11 +7,11 @@
   <style>
     :root {
       --bg: #0f1117;
-      --surface: #181b24;
-      --surface-hover: #1f2430;
-      --border: #2a3040;
+      --surface: #171a23;
+      --surface-hover: #1e2330;
+      --border: #262c3d;
       --text: #e8ecf4;
-      --text-muted: #98a2b3;
+      --text-muted: #94a0b8;
       --accent: #f59e0b;
       --accent-soft: rgba(245, 158, 11, 0.14);
       --green: #22c55e;
@@ -20,7 +20,7 @@
       --blue-soft: rgba(56, 189, 248, 0.14);
       --yellow: #eab308;
       --yellow-soft: rgba(234, 179, 8, 0.14);
-      --radius: 14px;
+      --radius: 12px;
     }
 
     * {
@@ -32,13 +32,14 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Microsoft JhengHei", sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.6;
+      font-size: 13px;
+      line-height: 1.5;
     }
 
     .container {
       max-width: 1080px;
       margin: 0 auto;
-      padding: 28px 18px 64px;
+      padding: 22px 16px 56px;
     }
 
     header {
@@ -46,36 +47,36 @@
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: flex-end;
-      gap: 16px;
-      margin-bottom: 24px;
-      padding-bottom: 18px;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 14px;
       border-bottom: 1px solid var(--border);
     }
 
     h1 {
-      margin: 0 0 6px;
-      font-size: 1.75rem;
+      margin: 0 0 4px;
+      font-size: 1.35rem;
       letter-spacing: 0.02em;
     }
 
     .subtitle {
       margin: 0;
       color: var(--text-muted);
-      font-size: 0.95rem;
+      font-size: 0.8rem;
     }
 
     .stats {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 8px;
     }
 
     .stat-pill {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 999px;
-      padding: 6px 14px;
-      font-size: 0.85rem;
+      padding: 4px 11px;
+      font-size: 0.76rem;
       color: var(--text-muted);
     }
 
@@ -87,23 +88,23 @@
     .controls {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 22px;
+      gap: 10px;
+      margin-bottom: 14px;
       align-items: center;
     }
 
     .search-box {
-      flex: 1 1 260px;
+      flex: 1 1 240px;
     }
 
     .search-box input {
       width: 100%;
-      padding: 10px 14px;
-      border-radius: 10px;
+      padding: 7px 12px;
+      border-radius: 8px;
       border: 1px solid var(--border);
       background: var(--surface);
       color: var(--text);
-      font-size: 0.95rem;
+      font-size: 0.82rem;
       outline: none;
     }
 
@@ -114,17 +115,17 @@
     .filter-group {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 6px;
     }
 
     .btn {
-      padding: 8px 14px;
-      border-radius: 10px;
+      padding: 6px 11px;
+      border-radius: 8px;
       border: 1px solid var(--border);
       background: var(--surface);
       color: var(--text-muted);
       cursor: pointer;
-      font-size: 0.88rem;
+      font-size: 0.78rem;
       transition: all 0.15s ease;
     }
 
@@ -141,76 +142,147 @@
     }
 
     select {
-      padding: 8px 12px;
-      border-radius: 10px;
+      padding: 6px 10px;
+      border-radius: 8px;
       border: 1px solid var(--border);
       background: var(--surface);
       color: var(--text);
-      font-size: 0.88rem;
+      font-size: 0.78rem;
       outline: none;
       cursor: pointer;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-      gap: 16px;
-    }
-
-    .card {
+    .table-wrap {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 18px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      transition: transform 0.15s ease, border-color 0.15s ease;
+      overflow-x: auto;
     }
 
-    .card:hover {
-      transform: translateY(-2px);
-      border-color: #3d465c;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.8125rem;
     }
 
-    .card-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 10px;
-    }
-
-    .movie-title {
-      margin: 0;
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .movie-id {
+    thead th {
+      padding: 9px 10px;
+      font-size: 0.74rem;
+      font-weight: 600;
       color: var(--text-muted);
-      font-size: 0.8rem;
-      font-weight: 500;
-      margin-right: 6px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.02);
+      white-space: nowrap;
     }
 
-    .original-title {
-      font-size: 0.85rem;
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.12s ease;
+    }
+
+    tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    tbody tr:hover {
+      background: var(--surface-hover);
+    }
+
+    td {
+      padding: 7px 10px;
+      vertical-align: middle;
+    }
+
+    .col-id {
+      width: 40px;
       color: var(--text-muted);
-      margin-top: 2px;
+      font-variant-numeric: tabular-nums;
+      text-align: center;
     }
 
-    .badges {
+    .col-thumb {
+      width: 48px;
+    }
+
+    .thumb-box {
+      width: 34px;
+      height: 48px;
+      border-radius: 5px;
+      overflow: hidden;
+      background: #10131a;
+      border: 1px solid var(--border);
       display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
+      align-items: center;
+      justify-content: center;
       flex-shrink: 0;
     }
 
+    .thumb-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .thumb-fallback {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+      user-select: none;
+    }
+
+    .title-main {
+      font-weight: 600;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .note-dot {
+      font-size: 0.7rem;
+      color: var(--accent);
+      opacity: 0.9;
+    }
+
+    .title-sub {
+      font-size: 0.73rem;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    .col-year,
+    .col-score,
+    .col-status {
+      white-space: nowrap;
+    }
+
+    .col-director {
+      color: var(--text-muted);
+      max-width: 170px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .score-val {
+      font-weight: 600;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .score-empty {
+      color: var(--text-muted);
+    }
+
     .badge {
-      padding: 3px 9px;
+      display: inline-block;
+      padding: 2px 8px;
       border-radius: 999px;
-      font-size: 0.76rem;
+      font-size: 0.7rem;
       font-weight: 600;
       white-space: nowrap;
     }
@@ -228,14 +300,133 @@
     .badge-pending {
       background: var(--yellow-soft);
       color: var(--yellow);
+      margin-left: 4px;
     }
 
-    .meta-row {
+    .empty-row td {
+      text-align: center;
+      padding: 36px 16px;
+      color: var(--text-muted);
+      cursor: default;
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 7, 11, 0.72);
+      backdrop-filter: blur(3px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 100;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal {
+      width: 100%;
+      max-width: 620px;
+      max-height: 88vh;
+      overflow-y: auto;
+      background: var(--surface);
+      border: 1px solid #343c52;
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text-muted);
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-close:hover {
+      color: var(--text);
+      border-color: var(--accent);
+    }
+
+    .modal-header {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding-right: 36px;
+      margin-bottom: 16px;
+    }
+
+    .modal-poster {
+      width: 88px;
+      height: 126px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #10131a;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .modal-poster img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .modal-poster .thumb-fallback {
+      font-size: 1.1rem;
+    }
+
+    .modal-title {
+      margin: 0 0 4px;
+      font-size: 1.2rem;
+      line-height: 1.35;
+    }
+
+    .modal-original {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-bottom: 8px;
+    }
+
+    .modal-meta {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      font-size: 0.85rem;
+      gap: 8px 14px;
+      font-size: 0.8rem;
       color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .modal-section {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .modal-section-title {
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      letter-spacing: 0.03em;
     }
 
     .score-box {
@@ -243,21 +434,20 @@
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: 10px 12px;
-      font-size: 0.86rem;
+      font-size: 0.84rem;
     }
 
     .douban-line {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 8px;
       font-weight: 600;
       color: var(--accent);
     }
 
     .douban-dist {
       margin-top: 4px;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-muted);
     }
 
@@ -265,41 +455,45 @@
       margin-top: 6px;
       padding-top: 6px;
       border-top: 1px dashed var(--border);
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-muted);
     }
 
     .notes-block {
-      font-size: 0.9rem;
-      color: #d6dce8;
+      font-size: 0.88rem;
+      color: #dce2ee;
       background: rgba(255, 255, 255, 0.02);
       border-left: 3px solid var(--accent);
-      padding: 8px 10px;
+      padding: 9px 12px;
       border-radius: 0 8px 8px 0;
+      white-space: pre-wrap;
     }
 
     .summary-block {
-      font-size: 0.86rem;
-      color: var(--text-muted);
+      font-size: 0.85rem;
+      color: var(--text);
+      white-space: pre-wrap;
     }
 
-    .card-footer {
-      margin-top: auto;
-      padding-top: 6px;
-      font-size: 0.76rem;
+    .modal-footer {
+      margin-top: 14px;
+      font-size: 0.74rem;
       color: var(--text-muted);
-      display: flex;
-      justify-content: flex-end;
+      text-align: right;
     }
 
-    .empty-state, .error-state {
-      grid-column: 1 / -1;
-      text-align: center;
-      padding: 48px 20px;
-      background: var(--surface);
-      border: 1px dashed var(--border);
-      border-radius: var(--radius);
-      color: var(--text-muted);
+    @media (max-width: 640px) {
+      .col-director,
+      .col-updated {
+        display: none;
+      }
+      .modal-header {
+        flex-direction: column;
+      }
+      .modal-poster {
+        width: 76px;
+        height: 108px;
+      }
     }
   </style>
 </head>
@@ -308,14 +502,14 @@
     <header>
       <div>
         <h1>🎬 小華的電影紀錄與分析</h1>
-        <p class="subtitle">直接讀取 <code>movies.jsonl</code> 自動渲染｜防洗分評價查詢與觀後手札</p>
+        <p class="subtitle">點擊任一電影列即可展開詳細評分與觀後心得</p>
       </div>
       <div class="stats" id="stats"></div>
     </header>
 
     <div class="controls">
       <div class="search-box">
-        <input id="searchInput" type="search" placeholder="搜尋片名、原文片名、導演、心得或關鍵字..." />
+        <input id="searchInput" type="search" placeholder="搜尋片名、原文片名、導演或心得..." />
       </div>
       <div class="filter-group" id="filterGroup">
         <button class="btn active" data-filter="all">全部</button>
@@ -324,16 +518,36 @@
         <button class="btn" data-filter="pending">待確認</button>
       </div>
       <select id="sortSelect" aria-label="排序方式">
-        <option value="id-asc">編號順序（舊→新）</option>
-        <option value="id-desc">編號順序（新→舊）</option>
+        <option value="id-asc">編號（舊→新）</option>
+        <option value="id-desc">編號（新→舊）</option>
         <option value="douban-desc">豆瓣分數（高→低）</option>
         <option value="year-desc">年份（新→舊）</option>
       </select>
     </div>
 
-    <main class="grid" id="movieGrid">
-      <div class="empty-state">正在載入電影資料...</div>
-    </main>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="col-id">#</th>
+            <th class="col-thumb">縮圖</th>
+            <th>片名</th>
+            <th class="col-year">年份</th>
+            <th class="col-director">導演</th>
+            <th class="col-status">狀態</th>
+            <th class="col-score">豆瓣</th>
+            <th class="col-updated">更新</th>
+          </tr>
+        </thead>
+        <tbody id="movieTbody">
+          <tr class="empty-row"><td colspan="8">正在載入電影資料...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal" id="modalContent"></div>
   </div>
 
   <script>
@@ -354,14 +568,32 @@
         .replace(/'/g, "&#39;");
     }
 
+    function getFallbackText(title) {
+      if (!title) return "🎬";
+      return escapeHtml(title.trim().slice(0, 2));
+    }
+
+    function renderThumb(movie, className) {
+      const poster = movie.poster || movie.thumbnail;
+      const fallback = getFallbackText(movie.title);
+      if (poster) {
+        return `
+          <div class="${className}">
+            <img src="${escapeHtml(poster)}" alt="${escapeHtml(movie.title)}" loading="lazy"
+              onerror="this.parentElement.innerHTML='<span class=\\'thumb-fallback\\'>${fallback}</span>'" />
+          </div>
+        `;
+      }
+      return `<div class="${className}"><span class="thumb-fallback">${fallback}</span></div>`;
+    }
+
     function renderStats(movies) {
       const total = movies.length;
       const watched = movies.filter(m => m.watched).length;
       const unwatched = total - watched;
       const pending = movies.filter(m => m.status !== "已確認").length;
 
-      const statsEl = document.getElementById("stats");
-      statsEl.innerHTML = `
+      document.getElementById("stats").innerHTML = `
         <span class="stat-pill">總片單<strong>${total}</strong></span>
         <span class="stat-pill">已看<strong>${watched}</strong></span>
         <span class="stat-pill">未看<strong>${unwatched}</strong></span>
@@ -392,7 +624,7 @@
         return haystack.includes(q);
       });
 
-      list = [...list].sort((a, b) => {
+      return [...list].sort((a, b) => {
         if (state.sort === "id-desc") return (b.id || 0) - (a.id || 0);
         if (state.sort === "douban-desc") {
           const sa = a.douban?.score ?? -1;
@@ -406,69 +638,112 @@
         }
         return (a.id || 0) - (b.id || 0);
       });
-
-      return list;
     }
 
-    function renderMovies() {
-      const grid = document.getElementById("movieGrid");
+    function renderTable() {
+      const tbody = document.getElementById("movieTbody");
       const list = getFilteredMovies();
 
       if (list.length === 0) {
-        grid.innerHTML = `<div class="empty-state">找不到符合條件的電影。</div>`;
+        tbody.innerHTML = `<tr class="empty-row"><td colspan="8">找不到符合條件的電影。</td></tr>`;
         return;
       }
 
-      grid.innerHTML = list.map(m => {
+      tbody.innerHTML = list.map(m => {
         const doubanScore = m.douban?.score;
-        const doubanVotes = m.douban?.votes;
-        const doubanDist = m.douban?.dist;
-        const hasScoreBox = doubanScore != null || m.other_scores;
-
+        const hasNotes = Boolean(m.user_notes || m.summary);
         return `
-          <article class="card">
-            <div class="card-top">
-              <div>
-                <h2 class="movie-title">
-                  <span class="movie-id">#${escapeHtml(m.id)}</span>${escapeHtml(m.title)}
-                </h2>
-                ${m.original_title ? `<div class="original-title">${escapeHtml(m.original_title)}</div>` : ""}
+          <tr data-id="${escapeHtml(m.id)}">
+            <td class="col-id">${escapeHtml(m.id)}</td>
+            <td class="col-thumb">${renderThumb(m, "thumb-box")}</td>
+            <td>
+              <div class="title-main">
+                <span>${escapeHtml(m.title)}</span>
+                ${hasNotes ? `<span class="note-dot" title="有心得或筆記">●</span>` : ""}
               </div>
-              <div class="badges">
-                <span class="badge ${m.watched ? "badge-watched" : "badge-unwatched"}">
-                  ${m.watched ? "已看" : "未看"}
-                </span>
-                ${m.status && m.status !== "已確認" ? `<span class="badge badge-pending">${escapeHtml(m.status)}</span>` : ""}
-              </div>
-            </div>
-
-            <div class="meta-row">
-              <span>年份：${m.year ? escapeHtml(m.year) : "未填"}</span>
-              <span>導演：${m.director ? escapeHtml(m.director) : "未填"}</span>
-            </div>
-
-            ${hasScoreBox ? `
-              <div class="score-box">
-                ${doubanScore != null ? `
-                  <div class="douban-line">
-                    <span>豆瓣 ${escapeHtml(doubanScore)}</span>
-                    ${doubanVotes ? `<span>${Number(doubanVotes).toLocaleString()} 人評分</span>` : ""}
-                  </div>
-                ` : ""}
-                ${doubanDist ? `<div class="douban-dist">${escapeHtml(doubanDist)}</div>` : ""}
-                ${m.other_scores ? `<div class="other-scores">${escapeHtml(m.other_scores)}</div>` : ""}
-              </div>
-            ` : ""}
-
-            ${m.user_notes ? `<div class="notes-block">💭 ${escapeHtml(m.user_notes)}</div>` : ""}
-            ${m.summary ? `<div class="summary-block">📌 ${escapeHtml(m.summary)}</div>` : ""}
-
-            <div class="card-footer">
-              <span>更新：${escapeHtml(m.updated_at || "-")}</span>
-            </div>
-          </article>
+              ${m.original_title ? `<div class="title-sub">${escapeHtml(m.original_title)}</div>` : ""}
+            </td>
+            <td class="col-year">${m.year ? escapeHtml(m.year) : "-"}</td>
+            <td class="col-director">${m.director ? escapeHtml(m.director) : "-"}</td>
+            <td class="col-status">
+              <span class="badge ${m.watched ? "badge-watched" : "badge-unwatched"}">${m.watched ? "已看" : "未看"}</span>
+              ${m.status && m.status !== "已確認" ? `<span class="badge badge-pending">${escapeHtml(m.status)}</span>` : ""}
+            </td>
+            <td class="col-score">
+              ${doubanScore != null ? `<span class="score-val">${escapeHtml(doubanScore)}</span>` : `<span class="score-empty">-</span>`}
+            </td>
+            <td class="col-updated" style="color: var(--text-muted); white-space: nowrap;">${escapeHtml(m.updated_at || "-")}</td>
+          </tr>
         `;
       }).join("");
+    }
+
+    function openModal(id) {
+      const movie = state.movies.find(m => String(m.id) === String(id));
+      if (!movie) return;
+
+      const doubanScore = movie.douban?.score;
+      const doubanVotes = movie.douban?.votes;
+      const doubanDist = movie.douban?.dist;
+      const hasScoreBox = doubanScore != null || movie.other_scores;
+
+      document.getElementById("modalContent").innerHTML = `
+        <button class="modal-close" id="modalCloseBtn" aria-label="關閉">×</button>
+        <div class="modal-header">
+          ${renderThumb(movie, "modal-poster")}
+          <div>
+            <h2 class="modal-title" id="modalTitle">#${escapeHtml(movie.id)} ${escapeHtml(movie.title)}</h2>
+            ${movie.original_title ? `<div class="modal-original">${escapeHtml(movie.original_title)}</div>` : ""}
+            <div>
+              <span class="badge ${movie.watched ? "badge-watched" : "badge-unwatched"}">${movie.watched ? "已看" : "未看"}</span>
+              ${movie.status ? `<span class="badge ${movie.status === "已確認" ? "badge-watched" : "badge-pending"}" style="margin-left:4px;">${escapeHtml(movie.status)}</span>` : ""}
+            </div>
+            <div class="modal-meta">
+              <span>年份：${movie.year ? escapeHtml(movie.year) : "未填"}</span>
+              <span>導演：${movie.director ? escapeHtml(movie.director) : "未填"}</span>
+            </div>
+          </div>
+        </div>
+
+        ${hasScoreBox ? `
+          <div class="modal-section">
+            <div class="modal-section-title">平台評價</div>
+            <div class="score-box">
+              ${doubanScore != null ? `
+                <div class="douban-line">
+                  <span>豆瓣 ${escapeHtml(doubanScore)}</span>
+                  ${doubanVotes ? `<span>${Number(doubanVotes).toLocaleString()} 人評分</span>` : ""}
+                </div>
+              ` : ""}
+              ${doubanDist ? `<div class="douban-dist">${escapeHtml(doubanDist)}</div>` : ""}
+              ${movie.other_scores ? `<div class="other-scores">${escapeHtml(movie.other_scores)}</div>` : ""}
+            </div>
+          </div>
+        ` : ""}
+
+        <div class="modal-section">
+          <div class="modal-section-title">觀後感 / 備註</div>
+          ${movie.user_notes
+            ? `<div class="notes-block">${escapeHtml(movie.user_notes)}</div>`
+            : `<div style="color: var(--text-muted); font-size: 0.84rem;">尚未記錄心得。</div>`}
+        </div>
+
+        ${movie.summary ? `
+          <div class="modal-section">
+            <div class="modal-section-title">討論重點</div>
+            <div class="summary-block">${escapeHtml(movie.summary)}</div>
+          </div>
+        ` : ""}
+
+        <div class="modal-footer">最後更新：${escapeHtml(movie.updated_at || "-")}</div>
+      `;
+
+      document.getElementById("modalBackdrop").classList.add("open");
+      document.getElementById("modalCloseBtn").addEventListener("click", closeModal);
+    }
+
+    function closeModal() {
+      document.getElementById("modalBackdrop").classList.remove("open");
     }
 
     async function init() {
@@ -483,20 +758,19 @@
           .map(line => JSON.parse(line));
 
         renderStats(state.movies);
-        renderMovies();
+        renderTable();
       } catch (err) {
-        document.getElementById("movieGrid").innerHTML = `
-          <div class="error-state">
-            無法讀取 <code>movies.jsonl</code>（${escapeHtml(err.message)}）。<br />
-            若是在本機直接雙擊開啟 HTML，請改透過 GitHub Pages 或本機伺服器開啟。
-          </div>
+        document.getElementById("movieTbody").innerHTML = `
+          <tr class="empty-row">
+            <td colspan="8">無法讀取 <code>movies.jsonl</code>（${escapeHtml(err.message)}）。請透過 GitHub Pages 或本機伺服器開啟。</td>
+          </tr>
         `;
       }
     }
 
     document.getElementById("searchInput").addEventListener("input", e => {
       state.query = e.target.value;
-      renderMovies();
+      renderTable();
     });
 
     document.getElementById("filterGroup").addEventListener("click", e => {
@@ -505,12 +779,26 @@
       document.querySelectorAll("#filterGroup .btn").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
       state.filter = btn.dataset.filter;
-      renderMovies();
+      renderTable();
     });
 
     document.getElementById("sortSelect").addEventListener("change", e => {
       state.sort = e.target.value;
-      renderMovies();
+      renderTable();
+    });
+
+    document.getElementById("movieTbody").addEventListener("click", e => {
+      const row = e.target.closest("tr[data-id]");
+      if (!row) return;
+      openModal(row.dataset.id);
+    });
+
+    document.getElementById("modalBackdrop").addEventListener("click", e => {
+      if (e.target.id === "modalBackdrop") closeModal();
+    });
+
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") closeModal();
     });
 
     init();
