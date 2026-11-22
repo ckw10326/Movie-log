@@ -530,7 +530,6 @@
         <thead>
           <tr>
             <th class="col-id">#</th>
-            <th class="col-thumb">縮圖</th>
             <th>片名</th>
             <th class="col-year">年份</th>
             <th class="col-director">導演</th>
@@ -540,7 +539,7 @@
           </tr>
         </thead>
         <tbody id="movieTbody">
-          <tr class="empty-row"><td colspan="8">正在載入電影資料...</td></tr>
+          <tr class="empty-row"><td colspan="7">正在載入電影資料...</td></tr>
         </tbody>
       </table>
     </div>
@@ -579,7 +578,7 @@
       if (poster) {
         return `
           <div class="${className}">
-            <img src="${escapeHtml(poster)}" alt="${escapeHtml(movie.title)}" loading="lazy"
+            <img src="${escapeHtml(poster)}" alt="${escapeHtml(movie.title)}" loading="lazy" referrerpolicy="no-referrer"
               onerror="this.parentElement.innerHTML='<span class=\\'thumb-fallback\\'>${fallback}</span>'" />
           </div>
         `;
@@ -645,7 +644,7 @@
       const list = getFilteredMovies();
 
       if (list.length === 0) {
-        tbody.innerHTML = `<tr class="empty-row"><td colspan="8">找不到符合條件的電影。</td></tr>`;
+        tbody.innerHTML = `<tr class="empty-row"><td colspan="7">找不到符合條件的電影。</td></tr>`;
         return;
       }
 
@@ -655,7 +654,6 @@
         return `
           <tr data-id="${escapeHtml(m.id)}">
             <td class="col-id">${escapeHtml(m.id)}</td>
-            <td class="col-thumb">${renderThumb(m, "thumb-box")}</td>
             <td>
               <div class="title-main">
                 <span>${escapeHtml(m.title)}</span>
