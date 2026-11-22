@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>小華的電影紀錄與分析｜Movie Log</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #181b24;
+      --surface-hover: #1f2430;
+      --border: #2a3040;
+      --text: #e8ecf4;
+      --text-muted: #98a2b3;
+      --accent: #f59e0b;
+      --accent-soft: rgba(245, 158, 11, 0.14);
+      --green: #22c55e;
+      --green-soft: rgba(34, 197, 94, 0.14);
+      --blue: #38bdf8;
+      --blue-soft: rgba(56, 189, 248, 0.14);
+      --yellow: #eab308;
+      --yellow-soft: rgba(234, 179, 8, 0.14);
+      --radius: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 28px 18px 64px;
+    }
+
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 1.75rem;
+      letter-spacing: 0.02em;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .stat-pill {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .stat-pill strong {
+      color: var(--text);
+      margin-left: 4px;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 22px;
+      align-items: center;
+    }
+
+    .search-box {
+      flex: 1 1 260px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .search-box input:focus {
+      border-color: var(--accent);
+    }
+
+    .filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .btn {
+      padding: 8px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.88rem;
+      transition: all 0.15s ease;
+    }
+
+    .btn:hover {
+      background: var(--surface-hover);
+      color: var(--text);
+    }
+
+    .btn.active {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    select {
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 0.88rem;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: #3d465c;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .movie-title {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .movie-id {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-right: 6px;
+    }
+
+    .original-title {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .badge {
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .badge-watched {
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    .badge-unwatched {
+      background: var(--blue-soft);
+      color: var(--blue);
+    }
+
+    .badge-pending {
+      background: var(--yellow-soft);
+      color: var(--yellow);
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .score-box {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 0.86rem;
+    }
+
+    .douban-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .douban-dist {
+      margin-top: 4px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .other-scores {
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px dashed var(--border);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .notes-block {
+      font-size: 0.9rem;
+      color: #d6dce8;
+      background: rgba(255, 255, 255, 0.02);
+      border-left: 3px solid var(--accent);
+      padding: 8px 10px;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .summary-block {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .card-footer {
+      margin-top: auto;
+      padding-top: 6px;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .empty-state, .error-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 48px 20px;
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>🎬 小華的電影紀錄與分析</h1>
+        <p class="subtitle">直接讀取 <code>movies.jsonl</code> 自動渲染｜防洗分評價查詢與觀後手札</p>
+      </div>
+      <div class="stats" id="stats"></div>
+    </header>
+
+    <div class="controls">
+      <div class="search-box">
+        <input id="searchInput" type="search" placeholder="搜尋片名、原文片名、導演、心得或關鍵字..." />
+      </div>
+      <div class="filter-group" id="filterGroup">
+        <button class="btn active" data-filter="all">全部</button>
+        <button class="btn" data-filter="watched">已看</button>
+        <button class="btn" data-filter="unwatched">未看</button>
+        <button class="btn" data-filter="pending">待確認</button>
+      </div>
+      <select id="sortSelect" aria-label="排序方式">
+        <option value="id-asc">編號順序（舊→新）</option>
+        <option value="id-desc">編號順序（新→舊）</option>
+        <option value="douban-desc">豆瓣分數（高→低）</option>
+        <option value="year-desc">年份（新→舊）</option>
+      </select>
+    </div>
+
+    <main class="grid" id="movieGrid">
+      <div class="empty-state">正在載入電影資料...</div>
+    </main>
+  </div>
+
+  <script>
+    const state = {
+      movies: [],
+      filter: "all",
+      query: "",
+      sort: "id-asc"
+    };
+
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function renderStats(movies) {
+      const total = movies.length;
+      const watched = movies.filter(m => m.watched).length;
+      const unwatched = total - watched;
+      const pending = movies.filter(m => m.status !== "已確認").length;
+
+      const statsEl = document.getElementById("stats");
+      statsEl.innerHTML = `
+        <span class="stat-pill">總片單<strong>${total}</strong></span>
+        <span class="stat-pill">已看<strong>${watched}</strong></span>
+        <span class="stat-pill">未看<strong>${unwatched}</strong></span>
+        ${pending > 0 ? `<span class="stat-pill">待確認<strong>${pending}</strong></span>` : ""}
+      `;
+    }
+
+    function getFilteredMovies() {
+      const q = state.query.trim().toLowerCase();
+      let list = state.movies.filter(m => {
+        if (state.filter === "watched" && !m.watched) return false;
+        if (state.filter === "unwatched" && m.watched) return false;
+        if (state.filter === "pending" && m.status === "已確認") return false;
+        if (!q) return true;
+
+        const haystack = [
+          m.title,
+          m.original_title,
+          m.director,
+          m.year,
+          m.user_notes,
+          m.summary,
+          m.other_scores
+        ]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+        return haystack.includes(q);
+      });
+
+      list = [...list].sort((a, b) => {
+        if (state.sort === "id-desc") return (b.id || 0) - (a.id || 0);
+        if (state.sort === "douban-desc") {
+          const sa = a.douban?.score ?? -1;
+          const sb = b.douban?.score ?? -1;
+          return sb - sa || (a.id || 0) - (b.id || 0);
+        }
+        if (state.sort === "year-desc") {
+          const ya = a.year ?? -1;
+          const yb = b.year ?? -1;
+          return yb - ya || (a.id || 0) - (b.id || 0);
+        }
+        return (a.id || 0) - (b.id || 0);
+      });
+
+      return list;
+    }
+
+    function renderMovies() {
+      const grid = document.getElementById("movieGrid");
+      const list = getFilteredMovies();
+
+      if (list.length === 0) {
+        grid.innerHTML = `<div class="empty-state">找不到符合條件的電影。</div>`;
+        return;
+      }
+
+      grid.innerHTML = list.map(m => {
+        const doubanScore = m.douban?.score;
+        const doubanVotes = m.douban?.votes;
+        const doubanDist = m.douban?.dist;
+        const hasScoreBox = doubanScore != null || m.other_scores;
+
+        return `
+          <article class="card">
+            <div class="card-top">
+              <div>
+                <h2 class="movie-title">
+                  <span class="movie-id">#${escapeHtml(m.id)}</span>${escapeHtml(m.title)}
+                </h2>
+                ${m.original_title ? `<div class="original-title">${escapeHtml(m.original_title)}</div>` : ""}
+              </div>
+              <div class="badges">
+                <span class="badge ${m.watched ? "badge-watched" : "badge-unwatched"}">
+                  ${m.watched ? "已看" : "未看"}
+                </span>
+                ${m.status && m.status !== "已確認" ? `<span class="badge badge-pending">${escapeHtml(m.status)}</span>` : ""}
+              </div>
+            </div>
+
+            <div class="meta-row">
+              <span>年份：${m.year ? escapeHtml(m.year) : "未填"}</span>
+              <span>導演：${m.director ? escapeHtml(m.director) : "未填"}</span>
+            </div>
+
+            ${hasScoreBox ? `
+              <div class="score-box">
+                ${doubanScore != null ? `
+                  <div class="douban-line">
+                    <span>豆瓣 ${escapeHtml(doubanScore)}</span>
+                    ${doubanVotes ? `<span>${Number(doubanVotes).toLocaleString()} 人評分</span>` : ""}
+                  </div>
+                ` : ""}
+                ${doubanDist ? `<div class="douban-dist">${escapeHtml(doubanDist)}</div>` : ""}
+                ${m.other_scores ? `<div class="other-scores">${escapeHtml(m.other_scores)}</div>` : ""}
+              </div>
+            ` : ""}
+
+            ${m.user_notes ? `<div class="notes-block">💭 ${escapeHtml(m.user_notes)}</div>` : ""}
+            ${m.summary ? `<div class="summary-block">📌 ${escapeHtml(m.summary)}</div>` : ""}
+
+            <div class="card-footer">
+              <span>更新：${escapeHtml(m.updated_at || "-")}</span>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    async function init() {
+      try {
+        const res = await fetch("./movies.jsonl", { cache: "no-store" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const text = await res.text();
+        state.movies = text
+          .split(/\r?\n/)
+          .map(line => line.trim())
+          .filter(Boolean)
+          .map(line => JSON.parse(line));
+
+        renderStats(state.movies);
+        renderMovies();
+      } catch (err) {
+        document.getElementById("movieGrid").innerHTML = `
+          <div class="error-state">
+            無法讀取 <code>movies.jsonl</code>（${escapeHtml(err.message)}）。<br />
+            若是在本機直接雙擊開啟 HTML，請改透過 GitHub Pages 或本機伺服器開啟。
+          </div>
+        `;
+      }
+    }
+
+    document.getElementById("searchInput").addEventListener("input", e => {
+      state.query = e.target.value;
+      renderMovies();
+    });
+
+    document.getElementById("filterGroup").addEventListener("click", e => {
+      const btn = e.target.closest("button[data-filter]");
+      if (!btn) return;
+      document.querySelectorAll("#filterGroup .btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      state.filter = btn.dataset.filter;
+      renderMovies();
+    });
+
+    document.getElementById("sortSelect").addEventListener("change", e => {
+      state.sort = e.target.value;
+      renderMovies();
+    });
+
+    init();
+  </script>
+</body>
+</html>
